@@ -30,6 +30,13 @@ LeakyReLU = Activation(
     derivative=lambda x: np.where(x > 0, 1, 0.01)
 )
 
+activation_factory = {
+    'relu': ReLU,
+    'sigmoid': Sigmoid,
+    'tanh': Tanh,
+    'leaky_relu': LeakyReLU,
+}
+
 class NeuralNetwork:
     def __init__(self, layer_dims, activation=ReLU):
         self.layer_dims = layer_dims

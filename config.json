@@ -1,0 +1,28 @@
+{
+    "train": false,
+    "test": true,
+    "param_search": false,
+    "visualize": true,
+
+    "data_path": "/home/Hanano/gxx/DLHW/HM01/dataset/cifar-10-batches-py",
+    "output_path": "/home/Hanano/gxx/DLHW/HM01/results",
+    "model_path": "/home/Hanano/gxx/DLHW/HM01/weights/best_model.pkl",
+    "base_output": "/home/Hanano/gxx/DLHW/HM01/results/param_search",
+
+    "batch_size": 256,
+    "normalize": true,
+    "layer_dims": [3072, 512, 512, 10],
+    "activation": "relu",
+    "lr_strategy": "constant",
+    "training_params": {
+        "epochs": 300,
+        "reg_lambda": 0.001,
+        "initial_lr": 0.1,
+        "warmup_epochs": 20
+    },
+    "grid_search": {
+        "initial_lr": [0.1, 0.01, 0.001],
+        "reg_lambda": [0.1, 0.01, 0.001],
+        "layer_dims": [[3072, 128, 128, 10], [3072, 256, 256, 10], [3072, 512, 512, 10]]
+    }
+}

@@ -1,7 +1,7 @@
 import numpy as np
 from data_loader import DatasetLoader
 from train import NeuralNetworkTrainer
-from model import NeuralNetwork, ReLU
+from model import NeuralNetwork, ReLU, activation_factory
 import logging
 import json
 from plot_results import TrainingVisualizer, WeightAnalyzer
@@ -42,6 +42,9 @@ class Experiment:
             normalize=self.config['normalize']
         )
         
+        # 根据config选择激活函数
+        activation_fn = activation_factory[self.config['activation']]
+
         self.logger.info("Building neural network...")
         self.trainer = NeuralNetworkTrainer(
             X_train=self.data_loader.X_train,
@@ -51,7 +54,7 @@ class Experiment:
             X_test=self.data_loader.X_test,
             y_test=self.data_loader.y_test,
             layer_dims=self.config['layer_dims'],
-            activation=ReLU,
+            activation=activation_fn,
             lr_strategy=self.config['lr_strategy'],
             batch_size=self.config['batch_size'], 
             **self.config['training_params']
@@ -123,19 +126,13 @@ class Experiment:
         analyzer.plot_weight_distributions()
 
 if __name__ == "__main__":
-    # param_search = True
-    param_search = False
-    # visualize = False
-    visualize = True
+    Ex = Experiment(config_path="/home/Hanano/gxx/DLHW/HM01/config.json")
+    Ex.initialize_components()
     
-    if param_search:
-        Ex = Experiment(config_path="/home/Hanano/gxx/DLHW/HM01/config.json")
-        Ex.initialize_components()
+    if Ex.config.get("param_search", False):
         best_params = Ex.run_hyperparameter_search()
     else:
-        Ex = Experiment(config_path="/home/Hanano/gxx/DLHW/HM01/config.json")
-        Ex.initialize_components()
         Ex.run()
     
-    if visualize:
+    if Ex.config.get("visualize", False):
         Ex.visualize_results()
