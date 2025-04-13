@@ -74,6 +74,9 @@ python main.py
 ```
 然后调整学习率等超参数即可
 
+下载[已训练好的权重](https://pan.baidu.com/s/1yCEPVghjuu36GPlkEz1IEg?pwd=tubs)
+
+
 2. 执行如下命令
 ```
 python main.py
